@@ -19,5 +19,5 @@ jobs:
       - name: action-tag-and-release
         uses: ./
         with:
-          version: $version
+          version: "$version"
           asset: ./dist/index.js
