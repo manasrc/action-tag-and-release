@@ -31097,13 +31097,13 @@ const octokit = github.getOctokit(token);
   console.log(tag);
 
   const release = await octokit.rest.repos.createRelease({
-    owner, repo, tag_name: tag.tag,
+    owner, repo, tag_name: tag.data.tag,
   });
 
   console.log(release);
 
   const asset = await octokit.rest.repos.uploadReleaseAsset({
-    owner, repo, release_id: release.id, name, data
+    owner, repo, release_id: release.data.id, name, data
   });
 
   console.log(asset);
