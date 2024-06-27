@@ -31091,7 +31091,7 @@ const octokit = github.getOctokit(token);
 
 (async () => {
   const tag = await octokit.rest.git.createTag({
-    owner, repo, tag: `v${version}`, message: '', object: sha
+    owner, repo, tag: `v${version}`, message: '', object: sha, type: 'commit'
   });
 
   console.log(tag);
