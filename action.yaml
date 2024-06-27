@@ -1,0 +1,20 @@
+name: 'tag-and-release'
+description: 'tag and release with artifact'
+
+inputs:
+  version:
+    required: true
+    description: 'version'
+  token:
+    required: false
+    default: ${{ github.token }}
+  repository:
+    required: false
+    default: ${{ github.repository }}
+  sha:
+    required: false
+    default: ${{ github.sha }}
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
