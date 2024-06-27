@@ -25,7 +25,7 @@ const octokit = github.getOctokit(token);
   if (asset) {
     const name = path.basename(asset);
     const data = fs.readFileSync(asset);
-    const asset = await octokit.rest.repos.uploadReleaseAsset({
+    await octokit.rest.repos.uploadReleaseAsset({
       owner, repo, release_id: release.data.id, name, data
     });
   }
