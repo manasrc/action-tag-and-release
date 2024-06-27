@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 const core = require('@actions/core');
 const github = require('@actions/github');
 
@@ -5,6 +8,7 @@ const token = core.getInput('token');
 const version = core.getInput('version');
 const repository = core.getInput('repository');
 const sha = core.getInput('sha');
+const assets = core.getInput('assets');
 
 const [owner, repo] = repository.split('/');
 const octokit = github.getOctokit(token);
@@ -14,17 +18,15 @@ const octokit = github.getOctokit(token);
     owner, repo, tag: `v${version}`, message: '', object: sha, type: 'commit'
   });
 
-  console.log(tag);
-
   const release = await octokit.rest.repos.createRelease({
     owner, repo, tag_name: tag.data.tag,
   });
 
-  console.log(release);
-
-  const asset = await octokit.rest.repos.uploadReleaseAsset({
-    owner, repo, release_id: release.data.id, name, data
-  });
-
-  console.log(asset);
+  if (assets) {
+    const name = path.basename(assets);
+    const data = fs.readFileSync(assets);
+    const asset = await octokit.rest.repos.uploadReleaseAsset({
+      owner, repo, release_id: release.data.id, name, data
+    });
+  }
 })();

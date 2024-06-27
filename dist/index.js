@@ -31078,6 +31078,9 @@ module.exports = parseParams
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
+const fs = __nccwpck_require__(7147);
+const path = __nccwpck_require__(1017);
+
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 
@@ -31085,6 +31088,7 @@ const token = core.getInput('token');
 const version = core.getInput('version');
 const repository = core.getInput('repository');
 const sha = core.getInput('sha');
+const assets = core.getInput('assets');
 
 const [owner, repo] = repository.split('/');
 const octokit = github.getOctokit(token);
@@ -31094,19 +31098,17 @@ const octokit = github.getOctokit(token);
     owner, repo, tag: `v${version}`, message: '', object: sha, type: 'commit'
   });
 
-  console.log(tag);
-
   const release = await octokit.rest.repos.createRelease({
     owner, repo, tag_name: tag.data.tag,
   });
 
-  console.log(release);
-
-  const asset = await octokit.rest.repos.uploadReleaseAsset({
-    owner, repo, release_id: release.data.id, name, data
-  });
-
-  console.log(asset);
+  if (assets) {
+    const name = path.basename(assets);
+    const data = fs.readFileSync(assets);
+    const asset = await octokit.rest.repos.uploadReleaseAsset({
+      owner, repo, release_id: release.data.id, name, data
+    });
+  }
 })();
 
 })();
