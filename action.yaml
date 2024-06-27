@@ -14,7 +14,7 @@ inputs:
   sha:
     required: false
     default: ${{ github.sha }}
-  assets:
+  asset:
     required: false
 
 runs:
