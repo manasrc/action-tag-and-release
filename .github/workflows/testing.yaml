@@ -1,0 +1,17 @@
+name: testing
+
+on:
+  push:
+    branches:
+      - testing 
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./
+        with:
+          version: '0.0.2'
