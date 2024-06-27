@@ -20,4 +20,3 @@ jobs:
         uses: ./
         with:
           version: ${{ env.version }}
-          asset: ./dist/index.js
