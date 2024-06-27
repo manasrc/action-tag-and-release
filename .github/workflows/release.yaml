@@ -1,0 +1,23 @@
+name: release 
+
+on:
+  push:
+    branches:
+      - master 
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up source
+        uses: actions/checkout@v4
+
+      - name: Set up version
+        run: echo "version=$(jq -r '.version' package.json)" >> $GITHUB_ENV
+
+      - name: action-tag-and-release
+      - uses: ./
+        with:
+          version: $version
+          asset: ./dist/index.js
