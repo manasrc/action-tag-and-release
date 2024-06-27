@@ -31099,7 +31099,7 @@ const octokit = github.getOctokit(token);
   });
 
   const release = await octokit.rest.repos.createRelease({
-    owner, repo, tag_name: tag.data.tag,
+    owner, repo, tag_name: tag.data.tag, nane: `${repository} ${tag.data.tag}`
   });
 
   if (asset) {
